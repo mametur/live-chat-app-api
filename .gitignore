@@ -1,0 +1,32 @@
+# Node.js dependencies
+node_modules/
+
+# TypeScript compiled files
+dist/
+build/
+*.tsbuildinfo
+
+# Environment variables
+.env
+
+
+# Logs
+logs/
+*.log
+*.log.*
+npm-debug.log
+
+# Editor-specific files
+.vscode/
+
+# Jest and testing
+coverage/
+jest-cache/
+jest.config.js
+
+# ESLint and Prettier
+.eslintcache
+.prettier.cache
+.prettierignore
+
+
