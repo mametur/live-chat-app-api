@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 import router from "./routes";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import helmet from "helmet"; // smaller middleware functions that set security-related headers
+import databaseConnection from "./config/database";
 
 const app = express();
 
@@ -21,7 +23,11 @@ app.use(
   })
 );
 
-app.use("/api", router);
+// Routes
+app.use("/api/auth", router);
+
+// Conntect DB
+databaseConnection();
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello World!");
