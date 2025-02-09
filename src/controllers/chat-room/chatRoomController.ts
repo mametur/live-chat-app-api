@@ -78,3 +78,18 @@ export const joinChatRoom = async (req: Request, res: Response): Promise<void> =
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
+// Get all chat rooms
+export const getAllChatRooms = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const chatRooms = await ChatRoom.find();
+    if (!chatRooms) {
+      res.status(404).json({ error: "No chat rooms found" });
+      return;
+    }
+    res.status(200).json(chatRooms);
+  } catch (err: unknown) {
+    console.error("Error fetching chat rooms:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
