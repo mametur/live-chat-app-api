@@ -24,7 +24,7 @@ app.use(
 );
 
 // Routes
-app.use("/api/auth", router);
+app.use("/api", router);
 
 // Conntect DB
 databaseConnection();

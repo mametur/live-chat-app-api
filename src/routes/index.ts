@@ -1,13 +1,10 @@
 import { Router } from "express";
-import userRoutes from "./userRoutes";
-import { login, logout, register } from "../controllers/authController";
-import { authMiddleware } from "../middleware/authMiddleware";
+import authRoutes from "./auth/authRoutes";
+import roomRoutes from "./room/roomRoutes";
 
 const router = Router();
 
-router.post("/login", login);
-router.post("/register", register);
-router.post("/logout", logout);
-router.use("/users", authMiddleware, userRoutes);
+router.use("/auth", authRoutes);
+router.use("/room", roomRoutes);
 
 export default router;
