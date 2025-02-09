@@ -7,7 +7,6 @@ import mongoose, { Schema, InferSchemaType, Model } from "mongoose";
 
 const chatRoomSchema = new Schema(
   {
-    roomId: { type: String, required: true, unique: true },
     name: { type: String },
     participants: [{ type: Schema.Types.ObjectId, ref: "User" }], // Referencing User model
   },
@@ -18,8 +17,5 @@ const chatRoomSchema = new Schema(
 type ChatRoomType = InferSchemaType<typeof chatRoomSchema>;
 
 // Create Mongoose model with inferred type
-const ChatRoom: Model<ChatRoomType> = mongoose.model<ChatRoomType>(
-  "ChatRoom",
-  chatRoomSchema
-);
+const ChatRoom: Model<ChatRoomType> = mongoose.model<ChatRoomType>("ChatRoom", chatRoomSchema);
 export default ChatRoom;

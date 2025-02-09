@@ -6,5 +6,6 @@ const router = Router();
 
 router.use(authMiddleware);
 router.post("/create", chatRoomController.createChatRoom);
+router.post("/join", chatRoomController.joinChatRoom);
 
 export default router;

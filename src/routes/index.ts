@@ -5,6 +5,6 @@ import roomRoutes from "./room/roomRoutes";
 const router = Router();
 
 router.use("/auth", authRoutes);
-router.use("/room", roomRoutes);
+router.use("/rooms", roomRoutes);
 
 export default router;
