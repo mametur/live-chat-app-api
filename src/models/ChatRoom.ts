@@ -3,8 +3,8 @@ Each chat room has a unique ID and an optional name (which can be changed).
 Each room keeps a list of participants (user IDs).
 Messages will be stored separately and linked to the room.
 */
-import mongoose, { Schema, InferSchemaType, Model } from "mongoose";
-
+import mongoose, { Schema, Model } from "mongoose";
+import { RoomsType } from "../types/Rooms";
 const chatRoomSchema = new Schema(
   {
     name: { type: String },
@@ -13,9 +13,5 @@ const chatRoomSchema = new Schema(
   { timestamps: true }
 );
 
-// Infer TypeScript type from schema
-type ChatRoomType = InferSchemaType<typeof chatRoomSchema>;
-
-// Create Mongoose model with inferred type
-const ChatRoom: Model<ChatRoomType> = mongoose.model<ChatRoomType>("ChatRoom", chatRoomSchema);
+const ChatRoom: Model<RoomsType> = mongoose.model<RoomsType>("ChatRoom", chatRoomSchema);
 export default ChatRoom;

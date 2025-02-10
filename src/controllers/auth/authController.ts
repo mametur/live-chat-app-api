@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../../models/User";
-import { RegisterRequestBody, LoginRequestBody, LoginResponseBody } from "../../types/auth";
+import { RegisterRequestBody, LoginRequestBody, LoginResponseBody } from "../../types/Auth";
 
 // Register a new user
 export const register = async (req: Request, res: Response, next: NextFunction): Promise<void> => {

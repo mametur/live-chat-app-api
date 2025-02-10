@@ -1,17 +1,13 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import { JwtPayload } from "../types/auth";
+import { JwtPayload } from "../types/Auth";
 
 // Extend Request type to include user information
 interface AuthRequest extends Request {
   user?: JwtPayload;
 }
 
-export const authMiddleware = (
-  req: AuthRequest,
-  res: Response,
-  next: NextFunction
-): void => {
+export const authMiddleware = (req: AuthRequest, res: Response, next: NextFunction): void => {
   try {
     const token = req.cookies.token || null; // Extract token from cookie
     if (!token) {
