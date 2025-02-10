@@ -44,3 +44,23 @@ export const sendMessage = async (req: Request, res: Response): Promise<void> =>
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
+// Get messages in a chat room
+
+export const getRoomMessages = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const roomId = req.query.roomId as string;
+
+    // Check room id is exist
+    if (!(await checkEntityExists(ChatRoom, roomId))) {
+      res.status(404).json({ error: "Room not found or invalid room ID format" });
+      return;
+    }
+    //
+    const roomMessages = await Message.find({ roomId }).populate("sender", "username email");
+    res.status(200).json(roomMessages);
+  } catch (err: unknown) {
+    console.error("Error getting room messages:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
