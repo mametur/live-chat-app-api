@@ -2,7 +2,7 @@
 import { NextFunction, Request, Response } from "express";
 import Message from "../../models/Message";
 import ChatRoom from "../../models/ChatRoom";
-import { entityCheck } from "../../helpers";
+import { CustomError, entityCheck } from "../../helpers";
 import User from "../../models/User";
 
 // Send a message (room or private)
@@ -10,23 +10,20 @@ export const sendMessage = async (req: Request, res: Response, next: NextFunctio
   try {
     const { roomId, sender, receiver, content } = req.body;
 
+    // Validate Sender user
+    if (!(await entityCheck.idExist(User, sender))) {
+      throw new CustomError(`Sender id not found  `, 400);
+    }
     // Validate room
     if (roomId) {
       if (!(await entityCheck.idExist(ChatRoom, roomId))) {
-        res.status(404).json({ error: "Room not found or invalid room ID format" });
-        return;
+        throw new CustomError(`Room id not found `, 400);
       }
-    }
-    // Validate Sender user
-    if (!(await entityCheck.idExist(User, sender))) {
-      res.status(400).json({ error: "Sender not found or invalid sender ID format" });
-      return;
     }
     // Validate Receiver user
     if (receiver) {
       if (!(await entityCheck.idExist(User, receiver))) {
-        res.status(400).json({ error: "Receiver not found or invalid receiver ID format" });
-        return;
+        throw new CustomError(`Receiver id not found  `, 400);
       }
     }
 

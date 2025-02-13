@@ -7,22 +7,27 @@ import cookieParser from "cookie-parser";
 import helmet from "helmet"; // smaller middleware functions that set security-related headers
 import databaseConnection from "./config/database";
 import errorHandler from "./middleware/errorHandler";
+import path from "path";
 
-const app = express();
-
-app.disable("x-powered-by"); // Remove the X-Powered-By header for secu
-
-dotenv.config(); // Load .env file
+dotenv.config(); // Load .env file FIRST before anything else
 
 const PORT = process.env.PORT || 3000;
 
+// Connect DB before handling requests
+databaseConnection();
+
+const app = express();
+
+app.use(helmet()); // for security
+
 app.use(express.json()); // parsing incoming JSON request bodies  makes them available in the req.body object.
+app.use(express.urlencoded({ extended: true })); // with URL-encoded payloads
 app.use(cookieParser()); //  parses incoming cookies and makes them available in the req.cookies object.
 
 // Enable CORS for frontend requests
 app.use(
   cors({
-    origin: "http://localhost:3000", // Change to frontend URL
+    origin: `http://localhost:${PORT}`, // Change to frontend URL
     credentials: true, // Allow cookies to be sent with requests
   })
 );
@@ -30,11 +35,13 @@ app.use(
 // Routes
 app.use("/api", router);
 
-// Conntect DB
-databaseConnection();
+// Serve static files (move it below routes to avoid conflicts)
+app.use(express.static(path.join(__dirname, "views")));
 
+// Home route
 app.get("/", (req: Request, res: Response) => {
-  res.send("Hello World!");
+  res.sendFile(path.join(__dirname, "views", "index.html"));
+  console.log("Home page has started..");
 });
 
 // Centralized error handler (middleware)
