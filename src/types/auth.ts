@@ -1,3 +1,4 @@
+"use strcit";
 export interface RegisterRequestBody {
   username: string;
   email: string;

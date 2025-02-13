@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import ChatRoom from "../../models/ChatRoom";
 import User from "../../models/User";
-import isValidObjectId from "../../helpers/checkMongoId";
+import { entityCheck } from "../../helpers";
 
 //Create a new chat room
 export const createChatRoom = async (req: Request, res: Response): Promise<void> => {
@@ -46,7 +46,7 @@ export const joinChatRoom = async (req: Request, res: Response): Promise<void> =
     const { userId, roomId } = req.body;
 
     // Validate if roomId is a valid MongoDB ObjectId
-    if (!isValidObjectId(userId) || !isValidObjectId(roomId)) {
+    if (!entityCheck.isValidObjectId(userId) || !entityCheck.isValidObjectId(roomId)) {
       res.status(400).json({ error: "Invalid room ID or user ID format" });
     }
 
@@ -100,7 +100,7 @@ export const getOneChatRoom = async (req: Request, res: Response): Promise<void>
     const { roomId } = req.params;
 
     // Validate if roomId is a valid MongoDB ObjectId
-    if (!isValidObjectId(roomId)) {
+    if (!entityCheck.isValidObjectId(roomId)) {
       res.status(400).json({ error: "Invalid room ID format" });
       return;
     }

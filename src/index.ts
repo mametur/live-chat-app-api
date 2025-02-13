@@ -1,1 +1,2 @@
-import './server';
+"use strict";
+import "./server";

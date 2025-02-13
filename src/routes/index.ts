@@ -1,3 +1,4 @@
+"use strict";
 import { Router } from "express";
 import authRoutes from "./auth/authRoutes";
 import roomRoutes from "./room/roomRoutes";

@@ -1,12 +1,16 @@
-import express, { Request, Response } from "express";
+"use strict";
+import express, { NextFunction, Request, Response } from "express";
 import dotenv from "dotenv";
 import router from "./routes";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import helmet from "helmet"; // smaller middleware functions that set security-related headers
 import databaseConnection from "./config/database";
+import errorHandler from "./middleware/errorHandler";
 
 const app = express();
+
+app.disable("x-powered-by"); // Remove the X-Powered-By header for secu
 
 dotenv.config(); // Load .env file
 
@@ -32,5 +36,8 @@ databaseConnection();
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello World!");
 });
+
+// Centralized error handler (middleware)
+app.use(errorHandler);
 
 export default app;
