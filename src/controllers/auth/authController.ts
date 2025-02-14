@@ -1,11 +1,11 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../../models/User";
 import { RegisterRequestBody, LoginRequestBody, LoginResponseBody } from "../../types/Auth";
 
 // Register a new user
-export const register = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+export const register = async (req: Request, res: Response): Promise<void> => {
   try {
     const { username, email, password } = req.body as RegisterRequestBody;
     const existingUser = await User.findOne({ email });
@@ -31,7 +31,7 @@ export const register = async (req: Request, res: Response, next: NextFunction):
 };
 
 // Login  a user
-export const login = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+export const login = async (req: Request, res: Response): Promise<void> => {
   try {
     // Check if the user is already logged in (token exists)
     if (req.cookies.token) {

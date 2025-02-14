@@ -1,13 +1,9 @@
-const js = require("@eslint/js");
-const tseslint = require("@typescript-eslint/eslint-plugin");
-const tsp = require("@typescript-eslint/parser");
+import js from "@eslint/js";
+import tseslint from "@typescript-eslint/eslint-plugin";
+import tsp from "@typescript-eslint/parser";
+import globals from "globals";
 
-const envGlobals = Object.keys(process.env).reduce((acc, key) => {
-  acc[key] = "readonly";
-  return acc;
-}, {});
-
-module.exports = [
+export default [
   js.configs.recommended, // JavaScript recommended rules
   {
     files: ["**/*.ts"],
@@ -19,10 +15,8 @@ module.exports = [
         ecmaVersion: "latest",
       },
       globals: {
-        ...envGlobals,
-        process: "true",
-        console: "true",
-        URL: "true",
+        ...globals.node,
+        ...globals.browser,
       },
     },
     plugins: {
@@ -33,6 +27,8 @@ module.exports = [
       "@typescript-eslint/explicit-module-boundary-types": "off",
       "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
     },
-    ignores: ["node_modules", "dist", "coverage", "docs", "eslint.config.js", "src/types/*"],
+  },
+  {
+    ignores: ["node_modules/", "dist/", "coverage/", "docs/", "__tests__", "src/types/*"],
   },
 ];
