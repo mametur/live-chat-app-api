@@ -49,7 +49,7 @@ export const getRoomMessages = async (req: Request, res: Response): Promise<void
 
     // Check room id is exist
     if (!(await entityCheck.idExist(ChatRoom, roomId))) {
-      res.status(404).json({ error: "Room not found or invalid room ID format" });
+      res.status(404).json({ error: "Room is not found" });
       return;
     }
     //

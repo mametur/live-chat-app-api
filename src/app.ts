@@ -5,17 +5,14 @@ import router from "./routes";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import helmet from "helmet"; // smaller middleware functions that set security-related headers
-import databaseConnection from "./config/database";
 import errorHandler from "./middleware/errorHandler";
 import path from "path";
-
-dotenv.config(); // Load .env file FIRST before anything else
-
-const PORT = process.env.PORT || 3000;
+import morgan from "morgan";
+import environment from "./config/environment";
+import connectMongoDB from "./config/database";
 
 // Connect DB before handling requests
-databaseConnection();
-
+connectMongoDB();
 const app = express();
 
 app.use(helmet()); // for security
@@ -27,10 +24,17 @@ app.use(cookieParser()); //  parses incoming cookies and makes them available in
 // Enable CORS for frontend requests
 app.use(
   cors({
-    origin: `http://localhost:${PORT}`, // Change to frontend URL
+    origin: `http://localhost:${environment.PORT}`, // Change to frontend URL
     credentials: true, // Allow cookies to be sent with requests
   })
 );
+
+// Use Morgan to log HTTP requests
+app.use(morgan("dev")); // Logs requests in "dev" format (method, URL, status, response time)
+app.use(morgan("combined")); // Logs IP, user-agent, referrer, etc.
+app.use(morgan("common")); // Simpler Apache-style log
+app.use(morgan("short")); // Shortened request logging
+app.use(morgan("tiny")); // Smallest output
 
 // Routes
 app.use("/api", router);
