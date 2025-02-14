@@ -1,7 +1,7 @@
-import { Request, Response, NextFunction, ErrorRequestHandler } from "express";
+import { Request, Response, ErrorRequestHandler } from "express";
 import { CustomError } from "../helpers";
 
-const errorHandler: ErrorRequestHandler = (err: unknown, req: Request, res: Response, next: NextFunction) => {
+const errorHandler: ErrorRequestHandler = (err: unknown, req: Request, res: Response) => {
   let customError = err as CustomError;
 
   if (!(customError instanceof CustomError)) {
