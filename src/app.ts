@@ -1,15 +1,14 @@
 "use strict";
-import express, { NextFunction, Request, Response } from "express";
-import dotenv from "dotenv";
+import express, { Request, Response } from "express";
 import router from "./routes";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import helmet from "helmet"; // smaller middleware functions that set security-related headers
 import errorHandler from "./middleware/errorHandler";
 import path from "path";
-import morgan from "morgan";
 import environment from "./config/environment";
 import connectMongoDB from "./config/database";
+import morganMiddleware from "./middleware/morganMiddleware";
 
 // Connect DB before handling requests
 connectMongoDB();
@@ -30,11 +29,7 @@ app.use(
 );
 
 // Use Morgan to log HTTP requests
-app.use(morgan("dev")); // Logs requests in "dev" format (method, URL, status, response time)
-app.use(morgan("combined")); // Logs IP, user-agent, referrer, etc.
-app.use(morgan("common")); // Simpler Apache-style log
-app.use(morgan("short")); // Shortened request logging
-app.use(morgan("tiny")); // Smallest output
+app.use(morganMiddleware);
 
 // Routes
 app.use("/api", router);
@@ -45,7 +40,6 @@ app.use(express.static(path.join(__dirname, "views")));
 // Home route
 app.get("/", (req: Request, res: Response) => {
   res.sendFile(path.join(__dirname, "views", "index.html"));
-  console.log("Home page has started..");
 });
 
 // Centralized error handler (middleware)
