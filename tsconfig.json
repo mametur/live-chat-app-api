@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2024", // latest ECMAScript features
-    "module": "CommonJS", // ECMAScript Modules, ESM)
+    "module": "CommonJS", // tells the TypeScript compiler to generate CommonJS-style JavaScript code as its output.
     "outDir": "./dist", // Output directory for compiled JavaScript files
     "rootDir": "./src",
     "allowJs": false,
