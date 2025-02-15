@@ -1,16 +1,16 @@
 {
   "compilerOptions": {
-    "target": "ES6",
-    "module": "CommonJS",
-    "outDir": "./dist",
+    "target": "ES2024", // latest ECMAScript features
+    "module": "CommonJS", // ECMAScript Modules, ESM)
+    "outDir": "./dist", // Output directory for compiled JavaScript files
     "rootDir": "./src",
-    "strict": true,
+    "allowJs": false,
+    "strict": true, // Enable strict type checking (recommended)
     "noImplicitAny": true,
     "strictNullChecks": true,
     "strictFunctionTypes": true,
     "strictPropertyInitialization": true,
     "sourceMap": true,
-
     "esModuleInterop": true // allows TypeScript to handle CommonJS modules (like express) in a way that makes them work seamlessly with ES module syntax
   },
   "include": ["src/**/*.ts"],
