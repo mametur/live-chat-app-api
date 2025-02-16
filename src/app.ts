@@ -9,6 +9,8 @@ import path from "path";
 import environment from "./config/environment";
 import connectMongoDB from "./config/database";
 import morganMiddleware from "./middleware/morganMiddleware";
+import { initializeWebSocketServer } from "./websocket";
+import { createServer } from "http";
 
 // Connect DB before handling requests
 connectMongoDB();
@@ -45,4 +47,11 @@ app.get("/", (req: Request, res: Response) => {
 // Centralized error handler (middleware)
 app.use(errorHandler);
 
-export default app;
+// Create  HTTP server
+
+const server = createServer(app);
+
+// Initialize WebSocket server
+initializeWebSocketServer(server);
+
+export default server;
